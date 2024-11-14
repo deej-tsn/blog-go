@@ -1,0 +1,13 @@
+package components
+
+import "github.com/deej-tsn/blog-go/internal/models"
+
+templ PostsList(posts []models.Post) {
+    <ul>
+       for _, post := range posts {
+        @PostHero(post)
+       }
+    
+    
+    </ul>
+}
