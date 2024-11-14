@@ -1,7 +1,7 @@
 +++
 title = "Diegeses"
 description = "Interview Prep for Diegeses"
-date= 2024-05-06
+date= 2024-05-31
 
 [author]
 name = "Dempsey"

@@ -2,6 +2,10 @@
     --background-colour :  #f1f5f8;
     --primary-colour: #a8a8a8;
     --white : #ffffff;
+
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 
@@ -23,7 +27,7 @@ body {
 nav {
     width: 100%;
     height: 4rem;
-    background-color: var(--primary-colour);
+    background-color: var(--white);
     margin-top: 0px;
     filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
     position: fixed;
@@ -31,6 +35,8 @@ nav {
     display: flex;
     align-items: center;
     z-index: 10;
+    border-bottom-style: solid;
+    border: 1px var(--primary-colour);
 
    
 }
@@ -60,6 +66,30 @@ p {
     text-align: justify;
 }
 
-ul {
-    text-align: justify;
+#PostsList {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.postHero {
+    display: block;
+    height: fit-content;
+    padding: 1rem;
+    border: 1px var(--primary-colour);
+    border-bottom-style: solid;
+    color: black;
+    text-decoration: none;
+}
+.postHero h1{
+    width: fit-content;
+}
+
+.postHero p {
+    width: fit-content;
+    color: var(--primary-colour);
+}
+.postHeroDate {
+    font-weight: 300;
+    font-size:medium;
 }

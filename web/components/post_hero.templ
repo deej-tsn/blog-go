@@ -6,7 +6,7 @@ templ PostHero(postData models.Post) {
     <a class="postHero" href={templ.SafeURL("/posts/"+ postData.Slug)}>
             <h1>{postData.Title}</h1>
             <p>{postData.Description}</p>
-            <p>{postData.Date.String()}</p>
+            <p class="postHeroDate">{postData.Date.Format(" Jan _2  ")}</p>
     </a>
 
 }
