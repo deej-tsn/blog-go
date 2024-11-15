@@ -24,9 +24,9 @@ No Competency questions.
 - [ ] Research Company
 	- [x] What they do
 	- [x] What would I do
-	- [ ] The company culture
+	- [x] The company culture
 	- [ ] Past work
-- [ ] Motivational Questions
+- [x] Motivational Questions
 	- [ ] Why Diegesis
 	- [ ] Why the role
 	- [ ] Why Tech

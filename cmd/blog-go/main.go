@@ -37,7 +37,7 @@ func main() {
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
 	}))
 
-	index := components.Index()
+	index := components.Index("Posts", components.LoadPostList())
 
 	// ROUTES
 	e.GET("/", func(c echo.Context) error {

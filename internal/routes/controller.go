@@ -15,6 +15,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/yuin/goldmark"
 	highlighting "github.com/yuin/goldmark-highlighting"
+	"github.com/yuin/goldmark/extension"
 )
 
 type (
@@ -65,6 +66,7 @@ func (sl *FileReader) GetPost(c echo.Context) error {
 	mdRenderer := goldmark.New(
 		goldmark.WithExtensions(
 			highlighting.Highlighting,
+			extension.GFM,
 		),
 	)
 	rest, err := frontmatter.Parse(strings.NewReader(postMarkdown), &post)
@@ -77,7 +79,7 @@ func (sl *FileReader) GetPost(c echo.Context) error {
 		// TODO: Handle different errors in the future
 		return c.String(201, err.Error())
 	}
-	return helper.Render(c, http.StatusAccepted, components.Post(buf.String()))
+	return helper.Render(c, http.StatusAccepted, components.Index(slug, components.Post(buf.String())))
 }
 
 func (sl *FileReader) PostHandler(c echo.Context) error {

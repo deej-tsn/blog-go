@@ -1,7 +1,7 @@
 package components
 
-templ Content() {
-    <div id="content" hx-get="/posts" hx-swap="innerHTML" hx-trigger="load">
-    
+templ Content(content templ.Component) {
+    <div id="content">
+        @content
     </div>
 }
