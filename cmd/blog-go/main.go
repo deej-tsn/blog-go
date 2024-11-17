@@ -47,5 +47,5 @@ func main() {
 	e.GET("posts/:slug", controller.GetPost)
 	e.GET("posts", controller.GetAllPosts)
 
-	e.Logger.Fatal(e.Start(":1323"))
+	e.Logger.Fatal(e.Start(":8080"))
 }
