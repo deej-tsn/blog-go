@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"slices"
 	"strings"
 
 	"github.com/adrg/frontmatter"
@@ -110,6 +111,9 @@ func (sl *FileReader) GetAllPosts(c echo.Context) error {
 	for _, file := range fileNames {
 		posts = append(posts, *sl.ParseFile(file))
 	}
+
+	// sort posts
+	slices.SortFunc(posts, func(a, b models.Post) int { return -1 * a.Date.Compare(b.Date) })
 
 	return helper.Render(c, http.StatusAccepted, components.PostsList(posts))
 }
