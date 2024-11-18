@@ -143,14 +143,16 @@ code span {
         width: 70%;
     }
 
+
+}
+
+@media (min-width: 1025px) {
+    #content {
+        width: 60%;
+    }
     #switchThemeBtn {
         bottom: 5rem;
         right:5rem;
     }
 }
 
-@media (min-width: 1024px) {
-    #content {
-        width: 60%;
-    }
-}
