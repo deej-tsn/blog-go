@@ -13,7 +13,6 @@ FROM gcr.io/distroless/static-debian11 AS release-stage
 WORKDIR /
 COPY --from=build-stage app/tmp/main /tmp/main
 COPY --from=build-stage /app/web/public ./web/public
-COPY --from=build-stage /app/data ./data
 EXPOSE 8080
 USER nonroot:nonroot
 ENTRYPOINT ["/tmp/main"]
