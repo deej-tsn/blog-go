@@ -138,12 +138,44 @@ code span {
     color: var(--black);
 }
 
+.select_wrap {
+
+    border: 1px solid var(--primary-colour);
+    border-radius: 4px;
+    margin-bottom: 10px;
+    padding: 2px ;
+    background-color: #f1f5f8;
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: 0;
+    width: fit-content;
+}
+
+.select_wrap label{
+    
+    font-size: small;
+    text-transform: uppercase;
+    color: var(--black);
+    width: fit-content;
+    padding-left: 5px;
+    
+}
+
+select{
+    background-color: transparent;
+    width: 7rem;
+    border:0px;
+    padding: 0px;
+    cursor: pointer;
+    font-weight: 400;
+    font-size:small;
+}
+
 @media (min-width: 768px) {
     #content {
         width: 70%;
     }
-
-
 }
 
 @media (min-width: 1025px) {

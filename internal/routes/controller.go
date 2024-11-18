@@ -104,6 +104,7 @@ func (sl *FileReader) ParseFile(slug string) *models.Post {
 
 func (sl *FileReader) GetAllPosts(c echo.Context) error {
 	posts := []models.Post{}
+	sortBy := c.QueryParam("sort")
 	log.Println("enter")
 	fileNames := getAllPostNames("./data/posts")
 	log.Println(fileNames)
@@ -111,9 +112,12 @@ func (sl *FileReader) GetAllPosts(c echo.Context) error {
 	for _, file := range fileNames {
 		posts = append(posts, *sl.ParseFile(file))
 	}
-
+	if sortBy == "newest" || sortBy == "" {
+		slices.SortFunc(posts, func(a, b models.Post) int { return -1 * a.Date.Compare(b.Date) })
+	} else {
+		slices.SortFunc(posts, func(a, b models.Post) int { return a.Date.Compare(b.Date) })
+	}
 	// sort posts
-	slices.SortFunc(posts, func(a, b models.Post) int { return -1 * a.Date.Compare(b.Date) })
 
 	return helper.Render(c, http.StatusAccepted, components.PostsList(posts))
 }

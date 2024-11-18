@@ -1,0 +1,13 @@
+package components
+
+templ SortMenu() {
+    <div class="select_wrap">
+        <label for="sortBy">Sort By:</label>
+        <select name="sort" id="sortBy" hx-get="/posts" hx-target="#loader" hx-swap="innerHTML" hx-trigger=" load, change">
+            <option value="newest" selected>Newest First</option>     
+            <option value="oldest">Oldest First</option>
+            
+            
+        </select>
+    </div>
+}

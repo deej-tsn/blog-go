@@ -1,8 +1,10 @@
 package components
 
 templ LoadPostList() {
-    <div id="loadingPosts" hx-get="/posts" hx-swap="innerHTML" hx-trigger="load">
-        <h1>Loading Posts</h1> 
+    
+    <div id="loadingPosts">
+        @SortMenu()
+        <div id="loader">Loading Posts</div> 
     
     </div>
 }
