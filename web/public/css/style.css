@@ -20,8 +20,8 @@
 
 [data-theme="dark"] {
     --background-colour :  #231f1f;
-    --primary-colour:  #2a2626;
-    --secondary-colour: #000000;
+    --primary-colour:  var(--black);
+    --secondary-colour: #2a2626;
     --opposite-colour:var(--white);
     --button_icon : url(../assets/LightMode.png);
     --paragraph_colour : #a8a8a8;
@@ -40,7 +40,7 @@ body {
     width:  100vw;
     height: 100%;
     padding: 0px;
-    position: absolute;
+    position: absolute;gap: inherit;
     color: var(--opposite-colour);
     overflow-x: hidden;
 }
@@ -84,17 +84,7 @@ nav h1 {
     padding: 2rem;
 }
 
-@media (min-width: 768px) {
-    #content {
-        width: 70%;
-    }
-}
 
-@media (min-width: 1024px) {
-    #content {
-        width: 60%;
-    }
-}
 
 p {
     text-align: justify;
@@ -137,8 +127,8 @@ p {
     width: 5rem;
     height: 5rem;
     position: fixed;
-    right: 5rem;
-    bottom: 5rem;
+    right: 2rem;
+    bottom: 2rem;
     border: 1px;
     filter: var(--drop_shadow);
     cursor: pointer;
@@ -146,4 +136,21 @@ p {
 
 code span {
     color: var(--black);
+}
+
+@media (min-width: 768px) {
+    #content {
+        width: 70%;
+    }
+
+    #switchThemeBtn {
+        bottom: 5rem;
+        right:5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    #content {
+        width: 60%;
+    }
 }
