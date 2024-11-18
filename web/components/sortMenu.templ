@@ -9,5 +9,23 @@ templ SortMenu() {
             
             
         </select>
+
     </div>
+    <script type="text/javascript">
+        const sortBy = document.getElementById("sortBy");
+        const localStorageSort = localStorage.getItem("sortBy");
+        if(localStorageSort === null){
+            sortBy.value = "newest";
+        }else{
+            sortBy.value = localStorageSort;
+        }
+
+
+        sortBy.addEventListener("change", function() {
+            const newSort = sortBy.value;
+            console.log(newSort)
+            localStorage.setItem("sortBy", newSort);
+        });
+  
+    </script>
 }
