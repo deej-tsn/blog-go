@@ -91,6 +91,8 @@ blog-go/
         ├── css/
         └── scripts/
 
+```
+
 ### Technologies Used
 
 - **Golang**: For backend development.
