@@ -15,9 +15,12 @@ func main() {
 	//db := sql.ConnectToDatabase()
 	e := echo.New()
 
+	pathToData := "./data/posts/"
+	pathToWeb := "./web/public"
+
 	//CONTROLLERS
 
-	controller := routes.NewFileReader()
+	controller := routes.NewSlugReader(pathToData)
 
 	// MIDDLEWARE
 
@@ -25,7 +28,7 @@ func main() {
 	e.Use(middleware.Logger())
 
 	// static files in public folder
-	e.Static("static", "./web/public")
+	e.Static("static", pathToWeb)
 
 	// resets server if error
 	e.Use(middleware.Recover())

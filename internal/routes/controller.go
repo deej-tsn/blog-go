@@ -6,7 +6,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"slices"
 	"strings"
 
 	"github.com/adrg/frontmatter"
@@ -20,20 +19,20 @@ import (
 )
 
 type (
-	// handler has a db pointer in it
-	SlugReader interface {
-		Read(slug string) (string, error)
+	// handler has a folder pointer in it
+	SlugReader struct {
+		pathToFile string
 	}
-
-	FileReader struct{}
 )
 
-func NewFileReader() *FileReader {
-	return &FileReader{}
+func NewSlugReader(pathToFile string) *SlugReader {
+	return &SlugReader{
+		pathToFile: pathToFile,
+	}
 }
 
-func (fsr FileReader) Read(slug string) (string, error) {
-	f, err := os.Open("./data/posts/" + slug + ".md")
+func (sl *SlugReader) ReadFile(slug string) (string, error) {
+	f, err := os.Open(sl.pathToFile + slug + ".md")
 	if err != nil {
 		return "", err
 	}
@@ -45,24 +44,12 @@ func (fsr FileReader) Read(slug string) (string, error) {
 	return string(b), nil
 }
 
-func getAllPostNames(dir string) []string {
-	fileNames := []string{}
-	files, err := os.ReadDir(dir)
-	if err != nil {
-		log.Fatal(err)
-	}
-	for _, file := range files {
-		fileNames = append(fileNames, strings.TrimSuffix(file.Name(), ".md"))
-	}
-	return fileNames
-}
-
-func (sl *FileReader) GetPost(c echo.Context) error {
+func (sl *SlugReader) GetPost(c echo.Context) error {
 	post := new(models.Post)
 	slug := c.Param("slug")
-	postMarkdown, err := sl.Read(slug)
+	postMarkdown, err := sl.ReadFile(slug)
 	if err != nil {
-		return c.String(http.StatusForbidden, err.Error())
+		return c.String(http.StatusNotFound, err.Error())
 	}
 	mdRenderer := goldmark.New(
 		goldmark.WithExtensions(
@@ -83,41 +70,35 @@ func (sl *FileReader) GetPost(c echo.Context) error {
 	return helper.Render(c, http.StatusAccepted, components.Index(slug, components.Post(buf.String())))
 }
 
-func (sl *FileReader) PostHandler(c echo.Context) error {
-	post := sl.ParseFile("post_1")
-	return helper.Render(c, http.StatusAccepted, components.PostHero(*post))
-}
-
-func (sl *FileReader) ParseFile(slug string) *models.Post {
+func (sl *SlugReader) ParseFile(slug string) (*models.Post, error) {
 	post := new(models.Post)
 	post.Slug = slug
-	postMarkdown, err := sl.Read(post.Slug)
+	postMarkdown, err := sl.ReadFile(post.Slug)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 	_, err = frontmatter.Parse(strings.NewReader(postMarkdown), &post)
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("Could not parse content file %s due to following error:\n %s\n", slug, err)
 	}
-	return post
+	return post, nil
 }
 
-func (sl *FileReader) GetAllPosts(c echo.Context) error {
+func (sl *SlugReader) GetAllPosts(c echo.Context) error {
 	posts := []models.Post{}
 	sortBy := c.QueryParam("sort")
-	log.Println("enter")
-	fileNames := getAllPostNames("./data/posts")
-	log.Println(fileNames)
-
+	fileNames := helper.FindFilenamesInDirectory(sl.pathToFile, ".md")
 	for _, file := range fileNames {
-		posts = append(posts, *sl.ParseFile(file))
+		post, err := sl.ParseFile(file)
+		if err != nil {
+			log.Printf("Could not parse toml frontmatter to following error:\n %s\n", err)
+		} else {
+			posts = append(posts, *post)
+		}
+
 	}
-	if sortBy == "newest" || sortBy == "" {
-		slices.SortFunc(posts, func(a, b models.Post) int { return -1 * a.Date.Compare(b.Date) })
-	} else {
-		slices.SortFunc(posts, func(a, b models.Post) int { return a.Date.Compare(b.Date) })
-	}
-	// sort posts
+
+	helper.SortPosts(sortBy, &posts)
 
 	return helper.Render(c, http.StatusAccepted, components.PostsList(posts))
 }
